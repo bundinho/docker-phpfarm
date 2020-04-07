@@ -4,7 +4,7 @@
 # Build and push the images.
 #
 # Usage: build-push-images.sh mydockerhubuser/myreponame
-# E.g. build-push-images.sh eugenesia/phpfarm
+# E.g. build-push-images.sh bundinho/phpfarm
 #
 # Turn on Docker experimental mode to enable the --squash functionality.
 # See https://github.com/docker/docker/tree/master/experimental
@@ -13,7 +13,7 @@
 # Get the Docker hub user/repo so we know how to tag the built images and push
 # them to Docker hub.
 if [ -z "$1" ]; then
-  hubUserRepo='eugenesia/phpfarm'
+  hubUserRepo='bundinho/phpfarm'
   echo "hubuser/repo not provided, defaulting to $hubUserRepo"
 else
   hubUserRepo="$1"
