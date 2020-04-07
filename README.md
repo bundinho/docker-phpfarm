@@ -33,8 +33,8 @@ Building the image
 
 After cloning the git repository, simply run the following command:
 
-    docker build -t splitbrain/phpfarm:jessie -f Dockerfile-Jessie .
-    docker build -t splitbrain/phpfarm:wheezy -f Dockerfile-Wheezy .
+    docker build -t bundinho/phpfarm:jessie -f Dockerfile-Jessie .
+    docker build -t bundinho/phpfarm:wheezy -f Dockerfile-Wheezy .
 
 This will setup a Debian base system, install phpfarm, download and compile the different PHP versions, extensions and setup Apache. So, yes this will take a while. See the next section for a faster alternative.
 
@@ -45,8 +45,8 @@ Downloading the image
 
 Simply downloading the ready made image from Docker Hub is probably the fastest way. Just run one of these:
 
-    docker pull splitbrain/phpfarm:jessie
-    docker pull splitbrain/phpfarm:wheezy
+    docker pull bundinho/phpfarm:jessie
+    docker pull bundinho/phpfarm:wheezy
 
 Running the container
 ---------------------
@@ -56,7 +56,7 @@ The following will run the container and map all ports to their respective ports
     docker run --rm -t -i -e APACHE_UID=$UID -v $PWD:/var/www:rw \
       -p 8051:8051 -p 8052:8052 -p 8053:8053 -p 8054:8054 -p 8055:8055 \
       -p 8056:8056 -p 8070:8070 -p 8071:8071 -p 8072:8072 -p 8073:8073 -p 8000:8000 \
-      splitbrain/phpfarm:jessie
+      bundinho/phpfarm:jessie
 
 You can access the Apache/PHP via localhost. Eg. `http://localhost:8053` for the PHP 5.3 version. The nightly build is available on port `8000`.
 
@@ -65,15 +65,15 @@ Above command will also remove the container again when the process is aborted w
 An alternative is to not isolate the container's network at all from the local machine. This makes it possible for the container to access all the services you're running locally, eg. a database. It will also automatically make all the exposed ports available locally (but you can't remap them, so they need to be available, eg. not used by anything else). To do so use the `--network host` switch:
 
     docker run --rm -t -i -e APACHE_UID=$UID -v $PWD:/var/www:rw \
-       --network host splitbrain/phpfarm:jessie
+       --network host bundinho/phpfarm:jessie
 
 You can also access the PHP binaries within the container directly. Refer to the table above for the correct names. The following command will run PHP 5.3 on your current working directory.
 
-    docker run --rm -t -i -v $PWD:/var/www:rw splitbrain/phpfarm:jessie php-5.3 --version
+    docker run --rm -t -i -v $PWD:/var/www:rw bundinho/phpfarm:jessie php-5.3 --version
 
 Alternatively you can also run an interactive shell inside the container with your current working directory mounted.
 
-    docker run --rm -t -i -v $PWD:/var/www:rw splitbrain/phpfarm:jessie /bin/bash
+    docker run --rm -t -i -v $PWD:/var/www:rw bundinho/phpfarm:jessie /bin/bash
 
 Loading custom php.ini settings
 -------------------------------
@@ -101,7 +101,7 @@ Here's a simple ``.gitlab-ci.yml`` example using phpunit.
     stages:
       - test
 
-    image: splitbrain/phpfarm:jessie
+    image: bundinho/phpfarm:jessie
 
     php-5.3:
       stage: test
